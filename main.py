@@ -5,7 +5,6 @@ from tkinter import messagebox
 import threading
 from pynput import keyboard
 import time
-import pyperclip
 
 class Window:
     def __init__(self):
@@ -18,7 +17,7 @@ class Window:
         self.display = Canvas(self.frame, width=800, height = 800, bg = "light grey",highlightthickness=0)
         self.score = Label(self.frame,text="score : "+str(self.prop.score),font=font.Font(size=40))
         self.score.place(x=100, y=40)
-        with open("2048/best_score.txt","r") as f:
+        with open("best_score.txt","r") as f:
             best_score = f.readline() 
         self.bestscore = Label(self.frame,text="best score : "+str(best_score),font=font.Font(size=40))
         self.bestscore.place(x=500, y=40)
@@ -112,7 +111,7 @@ class Window:
                         elif num == 131072: self.display.itemconfig(self.box_arr[i][j],fill = "light yellow")
                         elif num == 262144: self.display.itemconfig(self.box_arr[i][j],fill = "light green")
                         elif num == 524288: self.display.itemconfig(self.box_arr[i][j],fill = "dark green")
-        time.sleep(0.25)
+        time.sleep(0.1)
         self.display.itemconfig(self.letter_arr[self.prop.random_add[0]][self.prop.random_add[1]],text = str(self.prop.cont[self.prop.random_add[0]][self.prop.random_add[1]]))
         if self.prop.cont[self.prop.random_add[0]][self.prop.random_add[1]] == 2: 
             self.display.itemconfig(self.box_arr[self.prop.random_add[0]][self.prop.random_add[1]],fill = "yellow")
@@ -122,10 +121,10 @@ class Window:
                     
     def lose(self):
         messagebox.showinfo("warning","You lose. Your score is " + str(self.prop.score))
-        with open("2048/best_score.txt","r") as f:
+        with open("best_score.txt","r") as f:
             best_score = f.readline()
         if self.prop.score > int(best_score):
-            with open("2048/best_score.txt","w") as f:
+            with open("best_score.txt","w") as f:
                 f.write(str(self.prop.score))          
         self.frame.destroy()
         exit()        
@@ -152,11 +151,10 @@ class Window:
     #phys keyboard input
     def on_release(self,key):
         self.kb = False
-        if key == keyboard.Key.up: self.up()
-        elif key == keyboard.Key.down: self.down()
-        elif key == keyboard.Key.left: self.left()
-        elif key == keyboard.Key.right: self.right()
-
+        if key == keyboard.Key.up or key == keyboard.KeyCode.from_char("w"): self.up()
+        elif key == keyboard.Key.down or key == keyboard.KeyCode.from_char("s"): self.down()
+        elif key == keyboard.Key.left or key == keyboard.KeyCode.from_char("a"): self.left()
+        elif key == keyboard.Key.right or key == keyboard.KeyCode.from_char("d"): self.right()
 
     def kb_inp_ctrl(self):
         if self.kb:
