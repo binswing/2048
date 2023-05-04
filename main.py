@@ -105,6 +105,9 @@ class Window:
                         elif num == 1024: self.display.itemconfig(self.box_arr[i][j],fill = "light yellow")
                         elif num == 2048: self.display.itemconfig(self.box_arr[i][j],fill = "light green")
                         elif num == 4096: self.display.itemconfig(self.box_arr[i][j],fill = "dark green")                        
+                      
+                      
+                      
                         elif num == 16384: self.display.itemconfig(self.box_arr[i][j],fill = "yellow")
                         elif num == 32768: self.display.itemconfig(self.box_arr[i][j],fill = "green")
                         elif num == 65536: self.display.itemconfig(self.box_arr[i][j],fill = "lime")
